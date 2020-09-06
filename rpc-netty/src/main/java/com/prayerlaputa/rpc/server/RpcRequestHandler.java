@@ -12,12 +12,14 @@ import com.prayerlaputa.rpc.transport.command.ResponseHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.print.DocFlavor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 此处需要注意，必须保证RpcRequestHandler是单例的，否则可能导致在handle处理时，由于不是单例、
+ * 无法找到已经注册的服务对象
+ *
  * @author chenglong.yu
  * created on 2020/9/7
  */
@@ -50,7 +52,7 @@ public class RpcRequestHandler implements RequestHandler, ServiceProviderRegistr
                 // 找到服务提供者，利用Java反射机制调用服务的对应方法
                 String arg = SerializeSupport.parse(rpcRequest.getSerializedArguments());
                 Method method = serviceProvider.getClass().getMethod(rpcRequest.getMethodName(), String.class);
-                String result = (String)method.invoke(serviceProvider, arg);
+                String result = (String) method.invoke(serviceProvider, arg);
                 // 把结果封装成响应命令并返回
                 return new Command(new ResponseHeader(type(), header.getVersion(), header.getRequestId()), SerializeSupport.serialize(result));
             }

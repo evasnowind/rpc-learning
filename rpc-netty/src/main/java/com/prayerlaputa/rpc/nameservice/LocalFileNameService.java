@@ -104,6 +104,10 @@ public class LocalFileNameService implements NameService {
         if(null == uris || uris.isEmpty()) {
             return null;
         } else {
+            /*
+            此处暂时随机方式提供服务地址。
+            服务路由规则可以进一步扩展。比如RR、加权重等
+             */
             return uris.get(ThreadLocalRandom.current().nextInt(uris.size()));
         }
     }
