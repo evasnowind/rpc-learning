@@ -1,0 +1,3 @@
+com.prayerlaputa.rpc.serialize.impl.MetadataSerializer
+com.prayerlaputa.rpc.serialize.impl.RpcRequestSerializer
+com.prayerlaputa.rpc.serialize.impl.StringSerializer
